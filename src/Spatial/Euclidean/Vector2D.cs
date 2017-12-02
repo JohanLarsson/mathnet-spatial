@@ -172,7 +172,8 @@
                 return false;
             }
 
-            return obj is Vector2D && this.Equals((Vector2D)obj);
+            return obj is Vector2D && this.Equals((Vector2D)obj) ||
+                   obj is UnitVector2D && this.Equals((UnitVector2D)obj);
         }
 
         public override int GetHashCode()
@@ -263,7 +264,7 @@
         ///
         /// </summary>
         /// <param name="v2"></param>
-        /// <param name="clockWise">Positive in clockwisedirection</param>
+        /// <param name="clockWise">Positive in clockwise direction</param>
         /// <param name="returnNegative">If angle is > 180° a negative value is returned</param>
         /// <returns></returns>
         public Angle SignedAngleTo(Vector2D v2, bool clockWise, bool returnNegative = false)
@@ -355,10 +356,9 @@
             return other * (this.DotProduct(other) / other.DotProduct(other));
         }
 
-        public Vector2D Normalize()
+        public UnitVector2D Normalize()
         {
-            var l = this.Length;
-            return new Vector2D(this.X / l, this.Y / l);
+            return UnitVector2D.Create(this.X, this.Y);
         }
 
         public Vector2D ScaleBy(double d)
